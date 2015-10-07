@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
+import java.sql.Wrapper;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -282,8 +284,17 @@ public class DataSourceProxyBase implements Serializable {
 		return false;
 	}
 
-	public Object unwrap(Class iface) throws SQLException {
-		return null;
-	}
+    public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException {
+        if ((this.targetDS instanceof DataSource)) {
+            return ((DataSource)this.targetDS).getParentLogger();
+        }
+
+        logger.error("targetDS doesn't implement DataSource interface.");
+        throw new SQLFeatureNotSupportedException("target DataSource doesn't implement DataSource interface. nice. It is: " + this.targetDS.getClass().getName());
+    }
+
+    public <T> T unwrap(Class<T> iface) throws SQLException {
+        return (T) ((Wrapper) this.targetDS).unwrap(iface);
+    }
 
 }

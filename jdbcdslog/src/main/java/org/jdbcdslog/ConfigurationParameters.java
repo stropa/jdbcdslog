@@ -47,6 +47,10 @@ public class ConfigurationParameters {
 				}
 		}
 	}
+
+	public static void setSlowQueryThreshold(Long threshold) {
+		slowQueryThreshold = threshold;
+	}
 	
 	public static void setLogText(boolean alogText) {
 		logText = alogText;

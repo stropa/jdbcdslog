@@ -37,6 +37,10 @@ public class GenericLoggingProxy implements InvocationHandler  {
 		this.target = target;
 		this.sql = sql;
 	}
+
+	public Object getTarget() {
+		return this.target;
+	}
 	
 	public Object invoke(Object proxy, Method method, Object[] args)
 			throws Throwable {

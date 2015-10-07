@@ -5,6 +5,7 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.DriverPropertyInfo;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
@@ -116,6 +117,13 @@ public class DriverLoggingProxy implements Driver {
 
 	public boolean jdbcCompliant() {
 		return false;
+	}
+
+	public java.util.logging.Logger getParentLogger() throws java.sql.SQLFeatureNotSupportedException {
+		Enumeration<Driver> drivers = DriverManager.getDrivers();
+		if (drivers.hasMoreElements())
+			return ((Driver)drivers.nextElement()).getParentLogger();
+		return java.util.logging.Logger.getLogger("global");
 	}
 	
 }
