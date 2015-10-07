@@ -8,6 +8,11 @@
 	<version>1.0.8-SNAPSHOT</version>
 	<name>jdbcdslog</name>
 	<url>http://maven.apache.org</url>
+
+	<properties>
+		<java.version>1.6</java.version>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>slf4j</groupId>
@@ -73,9 +78,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<verbose>true</verbose>
-					<fork>true</fork>
-					<executable>javac</executable>
-					<compilerVersion>1.6</compilerVersion>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 				</configuration>
 			</plugin>
 			<plugin>
