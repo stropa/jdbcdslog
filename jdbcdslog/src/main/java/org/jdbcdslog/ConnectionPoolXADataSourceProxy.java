@@ -5,10 +5,10 @@ import javax.sql.DataSource;
 import javax.sql.XADataSource;
 
 public class ConnectionPoolXADataSourceProxy extends DataSourceProxyBase implements DataSource, XADataSource
-	, ConnectionPoolDataSource {
+        , ConnectionPoolDataSource {
 
-	public ConnectionPoolXADataSourceProxy() throws JDBCDSLogException {
-		super();
-	}
+    public ConnectionPoolXADataSourceProxy() throws JDBCDSLogException {
+        super();
+    }
 
 }

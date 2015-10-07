@@ -4,8 +4,8 @@ import javax.sql.DataSource;
 
 public class DataSourceProxy extends DataSourceProxyBase implements DataSource {
 
-	public DataSourceProxy() throws JDBCDSLogException {
-		super();
-	}
+    public DataSourceProxy() throws JDBCDSLogException {
+        super();
+    }
 
 }

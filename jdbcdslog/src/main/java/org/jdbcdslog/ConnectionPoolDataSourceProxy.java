@@ -4,10 +4,10 @@ import javax.sql.ConnectionPoolDataSource;
 import javax.sql.DataSource;
 
 public class ConnectionPoolDataSourceProxy extends DataSourceProxyBase implements DataSource
-	, ConnectionPoolDataSource {
+        , ConnectionPoolDataSource {
 
-	public ConnectionPoolDataSourceProxy() throws JDBCDSLogException {
-		super();
-	}
+    public ConnectionPoolDataSourceProxy() throws JDBCDSLogException {
+        super();
+    }
 
 }
