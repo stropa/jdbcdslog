@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Properties;
+import java.util.*;
 
 public class ConfigurationParameters {
 
@@ -16,6 +16,8 @@ public class ConfigurationParameters {
     static boolean printStackTrace = true;
 
     static boolean logText = false;
+
+    static Map<String, List<Class>> proxyClassesForTypes = new HashMap<String, List<Class>>();
 
     static {
         ClassLoader loader = ConfigurationParameters.class.getClassLoader();
@@ -36,6 +38,7 @@ public class ConfigurationParameters {
             String sprintStackTrace = props.getProperty("jdbcdslog.printStackTrace");
             if ("true".equalsIgnoreCase(sprintStackTrace))
                 printStackTrace = true;
+            readCustomProxiesConfig(props);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         } finally {
@@ -45,6 +48,27 @@ public class ConfigurationParameters {
                 } catch (IOException e) {
                     logger.error(e.getMessage(), e);
                 }
+        }
+    }
+
+    private static void readCustomProxiesConfig(Properties props) {
+        for (String name : props.stringPropertyNames()) {
+            String prefix = "jdbcdslog.proxies.for.";
+            if (name.startsWith(prefix)) {
+                String forTypeName = name.substring(name.lastIndexOf(".") + 1);
+                String proxiesStr = props.getProperty(name);
+                String[] proxyClassesNames = proxiesStr.split(",");
+                List<Class> classes = new ArrayList<Class>();
+                for (String proxyClassName : proxyClassesNames) {
+                    try {
+                        Class<?> aClass = Class.forName(proxyClassName.trim());
+                        classes.add(aClass);
+                    } catch (ClassNotFoundException e) {
+                        logger.error("Failed to find class by name " + proxyClassName, e);
+                    }
+                }
+                proxyClassesForTypes.put(forTypeName, classes);
+            }
         }
     }
 
